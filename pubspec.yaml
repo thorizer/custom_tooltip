@@ -1,5 +1,5 @@
 name: custom_tooltip
-description: "A customizable tooltip widget for Flutter"
+description: "A highly customizable tooltip widget for Flutter applications, offering rich functionality for both desktop and mobile platforms."
 homepage: https://github.com/thorizer/custom_tooltip
 license: MIT
 

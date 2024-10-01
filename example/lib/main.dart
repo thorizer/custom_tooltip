@@ -1,6 +1,5 @@
-import 'package:custom_tooltip/custom-tooltip-dart.dart';
+import 'package:custom_tooltip/custom_tooltip.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(const MyApp());

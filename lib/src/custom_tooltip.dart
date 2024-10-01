@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 import 'package:flutter/gestures.dart';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -89,7 +88,8 @@ class CustomTooltip extends StatefulWidget {
     this.showDuration = const Duration(milliseconds: 200),
     this.hideDuration = const Duration(milliseconds: 100),
     this.decoration,
-    this.textStyle = const TextStyle(color: Color.fromARGB(255, 139, 209, 255), fontSize: 18),
+    this.textStyle = const TextStyle(
+        color: Color.fromARGB(255, 139, 209, 255), fontSize: 18),
   });
 
   @override
@@ -100,7 +100,8 @@ class CustomTooltip extends StatefulWidget {
 ///
 /// This class handles the logic for showing and hiding the tooltip,
 /// as well as positioning it on the screen.
-class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderStateMixin {
+class CustomTooltipState extends State<CustomTooltip>
+    with SingleTickerProviderStateMixin {
   OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
   late AnimationController _animationController;
@@ -113,7 +114,10 @@ class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderS
 
   /// Determines if the current platform is desktop or web.
   bool get _isDesktopOrWeb {
-    return kIsWeb || Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+    return kIsWeb ||
+        defaultTargetPlatform == TargetPlatform.macOS ||
+        defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.linux;
   }
 
   @override
@@ -259,7 +263,8 @@ class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderS
 
     // Adjust vertical position if tooltip goes beyond bottom edge
     if (widget.tooltipHeight != null &&
-        position.dy + size.height + 5 + widget.tooltipHeight! > screenSize.height) {
+        position.dy + size.height + 5 + widget.tooltipHeight! >
+            screenSize.height) {
       dy = -widget.tooltipHeight! - 5;
     }
 
@@ -286,7 +291,8 @@ class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderS
                   ),
               padding: widget.padding,
               child: DefaultTextStyle(
-                style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium!,
+                style:
+                    widget.textStyle ?? Theme.of(context).textTheme.bodyMedium!,
                 child: widget.tooltip,
               ),
             ),
@@ -300,7 +306,8 @@ class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderS
   void _addGlobalRoute() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_isGlobalRouteAdded) {
-        GestureBinding.instance.pointerRouter.addGlobalRoute(_handleGlobalPointerEvent);
+        GestureBinding.instance.pointerRouter
+            .addGlobalRoute(_handleGlobalPointerEvent);
         _isGlobalRouteAdded = true;
       }
     });
@@ -337,7 +344,8 @@ class CustomTooltipState extends State<CustomTooltip> with SingleTickerProviderS
     _overlayEntry = null;
     _isTooltipVisible = false;
     if (_isGlobalRouteAdded) {
-      GestureBinding.instance.pointerRouter.removeGlobalRoute(_handleGlobalPointerEvent);
+      GestureBinding.instance.pointerRouter
+          .removeGlobalRoute(_handleGlobalPointerEvent);
       _isGlobalRouteAdded = false;
     }
   }
